@@ -5,7 +5,7 @@ const path = require('path');
 const chalk = require('chalk');
 const meow = require('meow');
 const mkdirp = require('mkdirp');
-const fetchSchema = require('../lib'); // eslint-disable-line import/no-unresolved
+const fetchSchema = require('../src'); // eslint-disable-line import/no-unresolved
 
 const cli = meow(`
 
