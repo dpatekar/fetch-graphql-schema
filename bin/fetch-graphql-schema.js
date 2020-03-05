@@ -15,6 +15,7 @@ const cli = meow(`
     Options
       -o, --output    Specify an output filename.
       -r, --readable  Resolve .graphql instead of .json.
+      -t, --token     Specify an authorization token. (e.g. 'Bearer xxxxxxxxxxxxxxxxxxxxxxxx')
 
     Examples
       $ fetch-graphql-schema http://api.server/graphql -o schema.json
@@ -29,9 +30,10 @@ if (cli.input.length === 0) {
 
 const schemaUrl = cli.input[0];
 const output = cli.flags.o || cli.flags.output;
+const token = cli.flags.t || cli.flags.token;
 
 if (!output) {
-  fetchSchema(schemaUrl, { readable: cli.flags.r || cli.flags.readable })
+  fetchSchema(schemaUrl, { readable: cli.flags.r || cli.flags.readable, token: token })
     .then(console.log);
 }
 
@@ -40,7 +42,7 @@ if (output && typeof output === 'string') {
 
   console.log(chalk.yellow(`Start fetching "${schemaUrl}"...`));
 
-  fetchSchema(schemaUrl, { readable: cli.flags.r || cli.flags.readable }).then(schemaJSON => {
+  fetchSchema(schemaUrl, { readable: cli.flags.r || cli.flags.readable, token: token }).then(schemaJSON => {
     mkdirp.sync((path.dirname(outputPath)));
     fs.writeFileSync(outputPath, schemaJSON);
 

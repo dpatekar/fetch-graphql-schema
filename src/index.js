@@ -14,6 +14,7 @@ module.exports = function fetchGraphQLSchema(url, options) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: options.token,
     },
     body: JSON.stringify({
       query: introspectionQuery,
